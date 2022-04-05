@@ -11,6 +11,8 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -19,7 +21,16 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Pusl2023.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Pusl2023.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-    <style name="Theme.Pusl2023.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-</resources>
+
+    <style name="Theme.Pusl2023.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+</style>
+
+    </resources>
