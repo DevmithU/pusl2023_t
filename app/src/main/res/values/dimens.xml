@@ -1,3 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+
+
+    <!--TODO Step 3: For the best practice add the dimen values in the dimen.xml file located in the res -> values folder. If you create the project as Empty Activity you may not find the the dimen.xml file. But don't worry use can create it using right click on the values folder and select the New -> Values Resource File -> name it as dimen.-->
+    <!--START-->
+    <dimen name="splash_title_text_size">35sp</dimen>
+    <!--END-->
+
+
 </resources>

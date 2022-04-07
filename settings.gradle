@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "pusl2023"
+rootProject.name = "pusl2023_t"
 include ':app'

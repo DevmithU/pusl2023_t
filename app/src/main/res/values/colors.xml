@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#ED2173</color>
+    <color name="colorPrimaryDark">#222934</color>
+    <color name="colorAccent">#ED2173</color>
+    <!--END-->
+    <!--TODO Step 2: For the best practice add the color values in the color.xml file located in the res -> values folder. -->
+    <!--START-->
+    <color name="colorWhite">#FFFFFF</color>
+
+
 </resources>
