@@ -1,4 +1,4 @@
-package com.example.pusl2023_t
+package com.example.pusl2023_t.utils
 
 import android.content.Context
 import android.graphics.Typeface
@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import java.util.jar.Attributes
 
-class BoldTextView(context : Context, attributeSet: AttributeSet): AppCompatTextView(context, attributeSet) {
+class BKSBoldTextView(context : Context, attributeSet: AttributeSet): AppCompatTextView(context, attributeSet) {
 
     init {
         applyFont()
