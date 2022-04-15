@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -40,20 +39,48 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             // Get the user details from intent as a ParcelableExtra.
             mUserDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
         }
-        // END
 
-        // TODO Step 6: After receiving the user details from intent set it to the UI.
-        // START
-        // Here, the some of the edittext components are disabled because it is added at a time of Registration.
-        et_first_name.isEnabled = false
-        et_first_name.setText(mUserDetails.firstName)
 
-        et_last_name.isEnabled = false
-        et_last_name.setText(mUserDetails.lastName)
+        if (mUserDetails.profileCompleted == 0) {
+            // Update the title of the screen to complete profile.
+            tv_title.text = resources.getString(R.string.title_complete_profile)
 
-        et_email.isEnabled = false
-        et_email.setText(mUserDetails.email)
+            // Here, the some of the edittext components are disabled because it is added at a time of Registration.
+            et_first_name.isEnabled = false
+            et_first_name.setText(mUserDetails.firstName)
 
+            et_last_name.isEnabled = false
+            et_last_name.setText(mUserDetails.lastName)
+
+            et_email.isEnabled = false
+            et_email.setText(mUserDetails.email)
+        } else {
+
+            // Call the setup action bar function.
+            setupActionBar()
+
+            // Update the title of the screen to edit profile.
+            tv_title.text = resources.getString(R.string.title_edit_profile)
+
+            // Load the image using the GlideLoader class with the use of Glide Library.
+            GlideLoader(this@UserProfileActivity).loadUserPicture(mUserDetails.image, iv_user_photo)
+
+            // Set the existing values to the UI and allow user to edit except the Email ID.
+            et_first_name.setText(mUserDetails.firstName)
+            et_last_name.setText(mUserDetails.lastName)
+
+            et_email.isEnabled = false
+            et_email.setText(mUserDetails.email)
+
+            if (mUserDetails.mobile != 0L) {
+                et_mobile_number.setText(mUserDetails.mobile.toString())
+            }
+            if (mUserDetails.gender == Constants.MALE) {
+                rb_male.isChecked = true
+            } else {
+                rb_female.isChecked = true
+            }
+        }
 
         iv_user_photo.setOnClickListener(this@UserProfileActivity)
         btn_save.setOnClickListener(this@UserProfileActivity)
@@ -88,7 +115,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
                         if (mSelectedImageFileUri != null) {
 
-                            FirestoreClass().uploadImageToCloudStorage(this@UserProfileActivity, mSelectedImageFileUri)
+                            FirestoreClass().uploadImageToCloudStorage(this@UserProfileActivity, mSelectedImageFileUri,Constants.USER_PROFILE_IMAGE)
                         } else {
 
                             /*
@@ -175,6 +202,18 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
            Log.e("Request Cancelled", "Image selection cancelled")
        }
    }
+    private fun setupActionBar() {
+
+        setSupportActionBar(toolbar_user_profile_activity)
+
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
+        }
+
+        toolbar_user_profile_activity.setNavigationOnClickListener { onBackPressed() }
+    }
 
    private fun validateUserProfileDetails(): Boolean {
        return when {
@@ -200,26 +239,45 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         // Here the field which are not editable needs no update. So, we will update user Mobile Number and Gender for now.
 
         // Here we get the text from editText and trim the space
-        val mobileNumber = et_mobile_number.text.toString().trim { it <= ' ' }
+        // Get the FirstName from editText and trim the space
+        val firstName = et_first_name.text.toString().trim { it <= ' ' }
+        if (firstName != mUserDetails.firstName) {
+            userHashMap[Constants.FIRST_NAME] = firstName
+        }
 
+        // Get the LastName from editText and trim the space
+        val lastName = et_last_name.text.toString().trim { it <= ' ' }
+        if (lastName != mUserDetails.lastName) {
+            userHashMap[Constants.LAST_NAME] = lastName
+        }
+
+
+        // Here we get the text from editText and trim the space
+        val mobileNumber = et_mobile_number.text.toString().trim { it <= ' ' }
         val gender = if (rb_male.isChecked) {
             Constants.MALE
         } else {
             Constants.FEMALE
         }
 
-
         if (mUserProfileImageURL.isNotEmpty()) {
             userHashMap[Constants.IMAGE] = mUserProfileImageURL
         }
 
-        if (mobileNumber.isNotEmpty()) {
+        if (mobileNumber.isNotEmpty() && mobileNumber != mUserDetails.mobile.toString()) {
             userHashMap[Constants.MOBILE] = mobileNumber.toLong()
         }
 
-        userHashMap[Constants.GENDER] = gender
+        if (gender.isNotEmpty() && gender != mUserDetails.gender) {
+            userHashMap[Constants.GENDER] = gender
+        }
 
-        userHashMap[Constants.COMPLETE_PROFILE] = 1
+        // Here if user is about to complete the profile then update the field or else no need.
+        // 0: User profile is incomplete.
+        // 1: User profile is completed.
+        if (mUserDetails.profileCompleted == 0) {
+            userHashMap[Constants.COMPLETE_PROFILE] = 1
+        }
 
         // Show the progress dialog.
         /*showProgressDialog(resources.getString(R.string.please_wait))*/
@@ -239,7 +297,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
 
        // Redirect to the Main Screen after profile completion.
-       startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
+       startActivity(Intent(this@UserProfileActivity, DashboardActivity::class.java))
        finish()
    }
 

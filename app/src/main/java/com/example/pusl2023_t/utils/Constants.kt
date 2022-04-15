@@ -11,11 +11,20 @@ object Constants {
     // Firebase Constants
     // This  is used for the collection name for USERS.
     const val USERS: String = "users"
+    const val PRODUCTS: String = "products"
+    const val CART_ITEMS: String = "cart_items"
+
+
 
     const val BKSTORE_PREFERENCES: String = "BKStorePrefs"
     const val LOGGED_IN_USERNAME: String = "logged_in_username"
 
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
+
+    const val EXTRA_PRODUCT_ID: String = "extra_product_id"
+
+    const val EXTRA_PRODUCT_OWNER_ID: String = "extra_product_owner_id"
+
 
     const val READ_STORAGE_PERMISSION_CODE = 2
 
@@ -24,14 +33,27 @@ object Constants {
     const val MALE: String = "male"
     const val FEMALE: String = "female"
 
+    const val DEFAULT_CART_QUANTITY: String = "1"
+
+
     // Firebase database field names
     const val MOBILE: String = "mobile"
     const val GENDER: String = "gender"
     const val IMAGE: String = "image"
 
+    const val FIRST_NAME: String = "firstName"
+    const val LAST_NAME: String = "lastName"
+
     const val USER_PROFILE_IMAGE:String = "User_Profile_Image"
 
     const val COMPLETE_PROFILE: String = "profileCompleted"
+
+    const val PRODUCT_IMAGE: String = "Product_Image"
+    const val CART_QUANTITY: String = "cart_quantity"
+
+
+    const val USER_ID: String = "user_id"
+    const val PRODUCT_ID: String = "product_id"
 
 
 
