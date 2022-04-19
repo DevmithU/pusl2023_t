@@ -1,5 +1,6 @@
 package com.example.pusl2023_t.ui.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import com.example.pusl2023_t.firestore.FirestoreClass
 import com.example.pusl2023_t.models.Cart
 import com.example.pusl2023_t.models.Product
 import com.example.pusl2023_t.ui.adapters.CartItemsListAdapter
+import com.example.pusl2023_t.utils.Constants
 import kotlinx.android.synthetic.main.activity_cart_list.*
 
 class CartListActivity : BaseActivity() {
@@ -25,6 +27,12 @@ class CartListActivity : BaseActivity() {
 
 
         setupActionBar()
+
+        btn_checkout.setOnClickListener {
+            val intent = Intent(this@CartListActivity, AddressListActivity::class.java)
+            intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
+            startActivity(intent)
+        }
 
     }
 
@@ -80,7 +88,7 @@ class CartListActivity : BaseActivity() {
             rv_cart_items_list.layoutManager = LinearLayoutManager(this@CartListActivity)
             rv_cart_items_list.setHasFixedSize(true)
 
-            val cartListAdapter = CartItemsListAdapter(this@CartListActivity, mCartListItems)
+            val cartListAdapter = CartItemsListAdapter(this@CartListActivity, mCartListItems, true)
             rv_cart_items_list.adapter = cartListAdapter
 
             var subTotal: Double = 0.0

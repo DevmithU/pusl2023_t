@@ -17,7 +17,8 @@ import kotlinx.android.synthetic.main.item_cart_layout.view.*
 
 open class CartItemsListAdapter(
     private val context: Context,
-    private var list: ArrayList<Cart>
+    private var list: ArrayList<Cart>,
+    private val updateCartItems: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -42,12 +43,18 @@ open class CartItemsListAdapter(
             GlideLoader(context).loadProductPicture(model.image, holder.itemView.iv_cart_item_image)
 
             holder.itemView.tv_cart_item_title.text = model.title
-            holder.itemView.tv_cart_item_price.text = "$ ${model.price}"
+            holder.itemView.tv_cart_item_price.text = "$${model.price}"
             holder.itemView.tv_cart_quantity.text = model.cart_quantity
 
             if (model.cart_quantity == "0") {
                 holder.itemView.ib_remove_cart_item.visibility = View.GONE
                 holder.itemView.ib_add_cart_item.visibility = View.GONE
+
+                if (updateCartItems) {
+                    holder.itemView.ib_delete_cart_item.visibility = View.VISIBLE
+                } else {
+                    holder.itemView.ib_delete_cart_item.visibility = View.GONE
+                }
 
                 holder.itemView.tv_cart_quantity.text =
                     context.resources.getString(R.string.lbl_out_of_stock)
@@ -59,8 +66,17 @@ open class CartItemsListAdapter(
                     )
                 )
             } else {
-                holder.itemView.ib_remove_cart_item.visibility = View.VISIBLE
-                holder.itemView.ib_add_cart_item.visibility = View.VISIBLE
+
+                if (updateCartItems) {
+                    holder.itemView.ib_remove_cart_item.visibility = View.VISIBLE
+                    holder.itemView.ib_add_cart_item.visibility = View.VISIBLE
+                    holder.itemView.ib_delete_cart_item.visibility = View.VISIBLE
+                } else {
+
+                    holder.itemView.ib_remove_cart_item.visibility = View.GONE
+                    holder.itemView.ib_add_cart_item.visibility = View.GONE
+                    holder.itemView.ib_delete_cart_item.visibility = View.GONE
+                }
 
                 holder.itemView.tv_cart_quantity.setTextColor(
                     ContextCompat.getColor(
@@ -70,19 +86,7 @@ open class CartItemsListAdapter(
                 )
             }
 
-            holder.itemView.ib_delete_cart_item.setOnClickListener {
-                when (context) {
-                    is CartListActivity -> {
-                        context.showProgressDialog(context.resources.getString(R.string.please_wait))
-                    }
-                }
-
-                FirestoreClass().removeItemFromCart(context, model.id)
-                // END
-            }
-
             holder.itemView.ib_remove_cart_item.setOnClickListener {
-
 
                 if (model.cart_quantity == "1") {
                     FirestoreClass().removeItemFromCart(context, model.id)
@@ -102,12 +106,10 @@ open class CartItemsListAdapter(
 
                     FirestoreClass().updateMyCart(context, model.id, itemHashMap)
                 }
-                // END
             }
 
             holder.itemView.ib_add_cart_item.setOnClickListener {
 
-                // START
                 val cartQuantity: Int = model.cart_quantity.toInt()
 
                 if (cartQuantity < model.stock_quantity.toInt()) {
@@ -133,14 +135,19 @@ open class CartItemsListAdapter(
                         )
                     }
                 }
-                // END
             }
 
+            holder.itemView.ib_delete_cart_item.setOnClickListener {
 
+                when (context) {
+                    is CartListActivity -> {
+                        context.showProgressDialog(context.resources.getString(R.string.please_wait))
+                    }
+                }
 
+                FirestoreClass().removeItemFromCart(context, model.id)
+            }
         }
-
-
     }
 
     override fun getItemCount(): Int {

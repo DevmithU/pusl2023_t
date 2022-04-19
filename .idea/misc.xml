@@ -4,25 +4,36 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2 - Copy (2)- pool 2- Copy2 editing without main 1 to open/app/src/main/res/layout/dialog_progress.xml" value="0.4941123188405797" />
+        <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable-v24/ic_vector_sold_products.xml" value="0.45" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.342" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable/ic_vector_add.xml" value="0.3455" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable/ic_vector_cart.xml" value="0.3905" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable/ic_vector_dashboard.xml" value="0.342" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable/ic_vector_delete.xml" value="0.3915" />
+        <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable/ic_vector_sold_products.xml" value="0.45" />
+        <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable/ic_vector_white_delete.xml" value="0.407" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable/item_dashboard_background.xml" value="0.3915" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable/item_grey_border_background.xml" value="0.33" />
+        <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable/item_primary_color_border_background.xml" value="0.4465" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/drawable/rv_item_image_background.xml" value="0.3915" />
+        <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_add_edit_address.xml" value="0.12685185185185185" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_add_product.xml" value="0.2809017223910841" />
+        <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_address_list.xml" value="0.22" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_cart_list.xml" value="0.17222222222222222" />
+        <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_checkout.xml" value="0.33" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_dashboard.xml" value="0.3080040526849038" />
+        <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_my_order_details.xml" value="0.5076992753623188" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_product_details.xml" value="0.1935185185185185" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_register.xml" value="0.5" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_settings.xml" value="0.16296296296296298" />
+        <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_sold_product_details.xml" value="0.2907801418439716" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/activity_user_profile.xml" value="0.25" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/fragment_dashboard.xml" value="0.3112968591691996" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/fragment_home.xml" value="0.39719202898550726" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/fragment_orders.xml" value="0.25" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/fragment_products.xml" value="0.3917572463768116" />
+        <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/fragment_sold_products.xml" value="0.5076992753623188" />
+        <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/item_address_layout.xml" value="0.24468085106382978" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/item_cart_layout.xml" value="0.3496376811594203" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/item_dashboard_layout.xml" value="0.2574074074074074" />
         <entry key="..\:/Users/devmith.DESKTOP-J4KJDQG/Documents/MAD_t/pusl2023_t2/app/src/main/res/layout/item_list_layout.xml" value="0.33" />

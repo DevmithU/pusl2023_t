@@ -25,7 +25,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener  {
 
         tv_edit.setOnClickListener(this@SettingsActivity)
 
-
+        ll_address.setOnClickListener(this@SettingsActivity)
 
     }
 
@@ -84,6 +84,11 @@ class SettingsActivity : BaseActivity(), View.OnClickListener  {
                     startActivity(intent)
                 }
                 // END
+
+                R.id.ll_address -> {
+                    val intent = Intent(this@SettingsActivity, AddressListActivity::class.java)
+                    startActivity(intent)
+                }
 
 
                 R.id.btn_logout -> {
