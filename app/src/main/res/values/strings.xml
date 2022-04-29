@@ -56,9 +56,9 @@
 
     <!--START
     <string name="title_activity_dashboard">MainActivity</string>-->
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_products">Products</string>
-    <string name="title_orders">Orders</string>
+    <string name="title_dashboard">All Books</string>
+    <string name="title_books">My Books</string>
+    <string name="title_requests">Requests</string>
 
 
     <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
@@ -72,39 +72,39 @@
 
     <string name="title_edit_profile">EDIT PROFILE</string>
 
-    <string name="action_add_product">Add Product</string>
+    <string name="action_add_book">Add Book</string>
 
-    <string name="title_add_product">ADD PRODUCT</string>
-    <string name="et_hint_product_title">Product Title</string>
-    <string name="et_hint_product_price">Product Price ($)</string>
-    <string name="et_hint_product_description">Product Description</string>
-    <string name="et_hint_product_quantity">Product Quantity</string>
+    <string name="title_add_book">ADD PRODUCT</string>
+    <string name="et_hint_book_title">Book Title</string>
+    <string name="et_hint_book_price">Book Price ($)</string>
+    <string name="et_hint_book_description">Book Description</string>
+    <string name="et_hint_book_quantity">Book Quantity</string>
 
-    <string name="err_msg_select_product_image">Please select product image.</string>
-    <string name="err_msg_enter_product_title">Please enter product title.</string>
-    <string name="err_msg_enter_product_price">Please enter product price.</string>
-    <string name="err_msg_enter_product_description">Please enter product description.</string>
-    <string name="err_msg_enter_product_quantity">Please enter product quantity.</string>
+    <string name="err_msg_select_book_image">Please select book image.</string>
+    <string name="err_msg_enter_book_title">Please enter book title.</string>
+    <string name="err_msg_enter_book_price">Please enter book price.</string>
+    <string name="err_msg_enter_book_description">Please enter book description.</string>
+    <string name="err_msg_enter_book_quantity">Please enter book quantity.</string>
 
-    <string name="product_uploaded_success_message">Your product is uploaded successfully.</string>
-    <string name="no_products_added_yet">No products added yet!</string>
+    <string name="book_uploaded_success_message">Your book is uploaded successfully.</string>
+    <string name="no_books_added_yet">No books added yet!</string>
     <string name="no_dashboard_item_found">No items found!</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="product_delete_success_message">Your product is deleted successfully.</string>
+    <string name="book_delete_success_message">Your book is deleted successfully.</string>
     <string name="delete_dialog_title">Delete</string>
-    <string name="delete_dialog_message">Are you sure you want to delete the product?</string>
+    <string name="delete_dialog_message">Are you sure you want to delete the book?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
-    <string name="title_product_details">PRODUCT DETAILS</string>
-    <string name="lbl_product_description">Product Description</string>
-    <string name="lbl_product_details_stock_quantity">Stock Quantity</string>
+    <string name="title_book_details">PRODUCT DETAILS</string>
+    <string name="lbl_book_description">Book Description</string>
+    <string name="lbl_book_details_stock_quantity">Stock Quantity</string>
 
     <string name="btn_lbl_add_to_cart">ADD TO CART</string>
 
-    <string name="success_message_item_added_to_cart">Product is added to your cart.</string>
+    <string name="success_message_item_added_to_cart">Book is added to your cart.</string>
 
     <string name="btn_lbl_go_to_cart">GO TO CART</string>
 
@@ -116,7 +116,7 @@
     <string name="btn_lbl_checkout">Checkout</string>
     <string name="action_cart">My Cart</string>
 
-    <string name="lbl_out_of_stock">OUT OF STOCK</string>
+    <string name="lbl_not_available">NOT AVAILABLE</string>
     <string name="msg_item_removed_successfully">Item removed successfully.</string>
 
     <string name="msg_for_available_stock">Available stock is %1$s!. You can not add more than stock quantity.</string>
@@ -153,7 +153,7 @@
     <string name="title_select_address">SELECT ADDRESS</string>
 
     <string name="title_checkout">CHECKOUT</string>
-    <string name="checkout_lbl_product_items">Product Items</string>
+    <string name="checkout_lbl_book_items">Book Items</string>
     <string name="checkout_lbl_selected_address">Selected Address</string>
     <string name="checkout_lbl_items_receipt">Items Receipt</string>
     <string name="lbl_payment_mode">Payment Mode</string>
@@ -173,9 +173,9 @@
     <string name="order_status_in_process">In Process</string>
     <string name="order_status_delivered">Delivered</string>
 
-    <string name="title_sold_products">Sold Products</string>
-    <string name="no_products_sold_out_yet">No products sold out yet!</string>
+    <string name="title_borrwed">Borrowed</string>
+    <string name="no_books_sold_out_yet">No books sold out yet!</string>
 
-    <string name="title_sold_product_details">SOLD PRODUCT DETAILS</string>
+    <string name="title_sold_book_details">SOLD PRODUCT DETAILS</string>
 
 </resources>

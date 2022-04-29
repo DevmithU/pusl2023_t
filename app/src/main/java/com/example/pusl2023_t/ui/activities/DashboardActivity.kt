@@ -10,8 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.pusl2023_t.R
 
-// TODO Step 1: Create the Dashboard Activity as the Bottom Navigation Activity.
-// START
+
 /**
  *  Dashboard Screen of the app.
  */
@@ -31,10 +30,10 @@ class DashboardActivity : BaseActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_products,
+                R.id.navigation_books,
                 R.id.navigation_dashboard,
                 R.id.navigation_orders,
-                R.id.navigation_sold_products
+                R.id.navigation_sold_books
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

@@ -3,30 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_products">
+    app:startDestination="@+id/navigation_books">
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.pusl2023_t.ui.fragments.DashboardFragment"
+        android:name="com.example.pusl2023_t.ui.fragments.AllBooksFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard"
+        />
 
     <fragment
-        android:id="@+id/navigation_products"
-        android:name="com.example.pusl2023_t.ui.fragments.ProductsFragment"
-        android:label="@string/title_products"
-        tools:layout="@layout/fragment_products" />
+        android:id="@+id/navigation_books"
+        android:name="com.example.pusl2023_t.ui.fragments.MyBooksFragment"
+        android:label="@string/title_books"
+        tools:layout="@layout/fragment_my_books" />
 
     <fragment
         android:id="@+id/navigation_orders"
-        android:name="com.example.pusl2023_t.ui.fragments.OrdersFragment"
-        android:label="@string/title_orders"
-        tools:layout="@layout/fragment_orders" />
+        android:name="com.example.pusl2023_t.ui.fragments.RequestsFragment"
+        android:label="@string/title_requests"
+        tools:layout="@layout/fragment_requests" />
 
     <fragment
-        android:id="@+id/navigation_sold_products"
-        android:name="com.example.pusl2023_t.ui.fragments.SoldProductsFragment"
-        android:label="@string/title_sold_products"
-        tools:layout="@layout/fragment_sold_products" />
+        android:id="@+id/navigation_sold_books"
+        android:name="com.example.pusl2023_t.ui.fragments.BorrowedBooksFragment"
+        android:label="@string/title_borrwed"
+        tools:layout="@layout/fragment_borrowed_books"
+
+        />
 </navigation>
 

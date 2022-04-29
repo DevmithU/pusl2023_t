@@ -6,22 +6,22 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.pusl2023_t.R
 import com.example.pusl2023_t.models.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 
 import com.example.pusl2023_t.ui.activities.*
-import com.example.pusl2023_t.ui.fragments.DashboardFragment
-import com.example.pusl2023_t.ui.fragments.OrdersFragment
-import com.example.pusl2023_t.ui.fragments.ProductsFragment
-import com.example.pusl2023_t.ui.fragments.SoldProductsFragment
+import com.example.pusl2023_t.ui.fragments.AllBooksFragment
+import com.example.pusl2023_t.ui.fragments.RequestsFragment
+import com.example.pusl2023_t.ui.fragments.MyBooksFragment
+import com.example.pusl2023_t.ui.fragments.BorrowedBooksFragment
 import com.example.pusl2023_t.utils.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class FirestoreClass {
@@ -95,6 +95,10 @@ class FirestoreClass {
                         // Call a function of base activity for transferring the result to it.
                         activity.userLoggedInSuccess(user)
                     }
+                    is BookDetailsActivity -> {
+                        // Call a function of base activity for transferring the result to it.
+                        activity.userDetailsSuccess(user)
+                    }
                     is SettingsActivity ->{
 
                         activity.userDetailsSuccess(user)
@@ -108,10 +112,53 @@ class FirestoreClass {
                     is LoginActivity -> {
                         activity.hideProgressDialog()
                     }
+                    is BookDetailsActivity ->{
+
+                        activity.hideProgressDialog()
+                        // END
+                    }
                     is SettingsActivity ->{
 
                         activity.hideProgressDialog()
                         // END
+                    }
+                }
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while getting user details.",
+                    e
+                )
+            }
+    }
+    fun getOwnerDetails(activity: BorrowedBookDetailsActivity,owner_id:String) {
+
+        // Here we pass the collection name from which we wants the data.
+        mFireStore.collection(Constants.USERS)
+            // The document id to get the Fields of user.
+            .document(owner_id)
+            .get()
+            .addOnSuccessListener { document ->
+
+                Log.i(activity.javaClass.simpleName, document.toString())
+
+                // Here we have received the document snapshot which is converted into the User Data model object.
+                val user = document.toObject(User::class.java)!!
+
+
+
+                when (activity) {
+                    is BorrowedBookDetailsActivity -> {
+                        // Call a function of base activity for transferring the result to it.
+                        activity.getOwnerDetailsSuccess(user)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is any error. And print the error in log.
+                when (activity) {
+                    is BorrowedBookDetailsActivity -> {
+                        activity.hideProgressDialog()
                     }
                 }
 
@@ -159,7 +206,145 @@ class FirestoreClass {
                 )
             }
     }
+    fun requestBook(activity: Activity, bookHashMap: HashMap<String, Any>,book_id:String) {
+        // Collection Name
+        mFireStore.collection("books")
+            // Document ID against which the data to be updated. Here the document id is the current logged in user id.
+            .document(book_id)
+            // A HashMap of fields which are to be updated.
+            .update(bookHashMap)
+            .addOnSuccessListener {
 
+
+                // Notify the success result.
+                when (activity) {
+                    is BookDetailsActivity -> {
+                        // Call a function of base activity for transferring the result to it.
+                        //will also hide progress dialog
+                        activity.requestBookSuccess()
+                    }
+                    is EditBookActivity -> {
+                        // Hide the progress dialog if there is any error. And print the error in log.
+                        activity.updateBookDetailsSuccess()
+                    }
+                }
+                // END
+            }
+            .addOnFailureListener { e ->
+
+                when (activity) {
+                    is BookDetailsActivity -> {
+                        // Hide the progress dialog if there is any error. And print the error in log.
+                        activity.hideProgressDialog()
+                    }
+                    is EditBookActivity -> {
+                        // Hide the progress dialog if there is any error. And print the error in log.
+                        activity.hideProgressDialog()
+                    }
+                }
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while updating the user details.",
+                    e
+                )
+            }
+    }
+    fun updateRequestBook(fragment: Fragment ,book_id: String, status: String) {
+        // Collection Name
+        mFireStore.collection("books")
+            // Document ID against which the data to be updated. Here the document id is the current logged in user id.
+            .document(book_id)
+            // A HashMap of fields which are to be updated.
+            .update("status",status)
+            .addOnSuccessListener {
+
+
+                // Notify the success result.
+                when (fragment) {
+                    is RequestsFragment -> {
+                        // Call a function of base activity for transferring the result to it.
+                        //will also hide progress dialog
+                        fragment.updateRequestBookSuccess()
+                    }
+                    is BorrowedBooksFragment -> {
+                        // Call a function of base activity for transferring the result to it.
+                        //will also hide progress dialog
+                        fragment.updateRequestBookSuccess()
+                    }
+
+                }
+                // END
+            }
+            .addOnFailureListener { e ->
+
+                when (fragment) {
+                    is RequestsFragment -> {
+                        // Hide the progress dialog if there is any error. And print the error in log.
+                        fragment.hideProgressDialog()
+                    }
+                    is BorrowedBooksFragment -> {
+                        // Hide the progress dialog if there is any error. And print the error in log.
+                        fragment.hideProgressDialog()
+                    }
+                }
+
+                Log.e(
+                    fragment.javaClass.simpleName,
+                    "Error while updating the user details.",
+                    e
+                )
+            }
+    }
+    fun updateRequestBook(activity: Activity ,book_id: String, status: String) {
+        // Collection Name
+        mFireStore.collection("books")
+            // Document ID against which the data to be updated. Here the document id is the current logged in user id.
+            .document(book_id)
+            // A HashMap of fields which are to be updated.
+            .update("status",status)
+            .addOnSuccessListener {
+
+
+                // Notify the success result.
+                when (activity) {
+                    is RequestDetailsActivity -> {
+                        // Call a function of base activity for transferring the result to it.
+                        //will also hide progress dialog
+                        activity.updateRequestBookSuccess()
+                    }
+                    is BorrowedBookDetailsActivity -> {
+                        // Call a function of base activity for transferring the result to it.
+                        //will also hide progress dialog
+                        activity.updateRequestBookSuccess()
+                    }
+
+                }
+                // END
+            }
+            .addOnFailureListener { e ->
+
+                when (activity) {
+                    is RequestDetailsActivity -> {
+                        // Hide the progress dialog if there is any error. And print the error in log.
+                        activity.hideProgressDialog()
+                    }
+                    is BorrowedBookDetailsActivity -> {
+                        // Hide the progress dialog if there is any error. And print the error in log.
+                        activity.hideProgressDialog()
+                    }
+
+                }
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while updating the user details.",
+                    e
+                )
+            }
+    }
+
+    //___________________________2
 
     fun uploadImageToCloudStorage(activity: Activity, imageFileURI: Uri?, imageType: String) {
 
@@ -182,7 +367,7 @@ class FirestoreClass {
                             is UserProfileActivity -> {
                                 activity.imageUploadSuccess(uri.toString())
                             }
-                            is AddProductActivity -> {
+                            is AddBookActivity -> {
                                 activity.imageUploadSuccess(uri.toString())
                             }
                         }
@@ -196,7 +381,7 @@ class FirestoreClass {
                         activity.hideProgressDialog()
                     }
 
-                    is AddProductActivity -> {
+                    is AddBookActivity -> {
                         activity.hideProgressDialog()
                     }
                 }
@@ -206,16 +391,17 @@ class FirestoreClass {
             }
     }
 
-    fun uploadProductDetails(activity: AddProductActivity, productInfo: Product) {
 
-        mFireStore.collection(Constants.PRODUCTS)
+    fun uploadBookDetails(activity: AddBookActivity, bookInfo: Book) {
+
+        mFireStore.collection("books")
             .document()
             // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
-            .set(productInfo, SetOptions.merge())
+            .set(bookInfo, SetOptions.merge())
             .addOnSuccessListener {
 
                 // Here call a function of base activity for transferring the result to it.
-                activity.productUploadSuccess()
+                activity.bookUploadSuccess()
             }
             .addOnFailureListener { e ->
 
@@ -223,70 +409,71 @@ class FirestoreClass {
 
                 Log.e(
                     activity.javaClass.simpleName,
-                    "Error while uploading the product details.",
+                    "Error while uploading the book details.",
                     e
                 )
             }
     }
 
-    fun getProductsList(fragment: Fragment) {
+
+    fun getBooksList(fragment: Fragment) {
         // The collection name for PRODUCTS
-        mFireStore.collection(Constants.PRODUCTS).whereEqualTo(Constants.USER_ID, getCurrentUserID()).get() // Will get the documents snapshots.
+        mFireStore.collection("books").whereEqualTo(Constants.USER_ID, getCurrentUserID()).get() // Will get the documents snapshots.
             .addOnSuccessListener { document ->
 
                 // Here we get the list of boards in the form of documents.
-                Log.e("Products List", document.documents.toString())
+                Log.e("Books List///////////", document.documents.toString())
 
-                // Here we have created a new instance for Products ArrayList.
-                val productsList: ArrayList<Product> = ArrayList()
+                // Here we have created a new instance for Books ArrayList.
+                val booksList: ArrayList<Book> = ArrayList()
 
-                // A for loop as per the list of documents to convert them into Products ArrayList.
+                // A for loop as per the list of documents to convert them into Books ArrayList.
                 for (i in document.documents) {
 
-                    val product = i.toObject(Product::class.java)
-                    product!!.product_id = i.id
+                    val book = i.toObject(Book::class.java)
+                    book!!.book_id = i.id
 
-                    productsList.add(product)
+                    booksList.add(book)
                 }
 
                 when (fragment) {
-                    is ProductsFragment -> {
-                        fragment.successProductsListFromFireStore(productsList)
+                    is MyBooksFragment -> {
+                        fragment.successBooksListFromFireStore(booksList)
                     }
                 }
             }
             .addOnFailureListener { e ->
                 // Hide the progress dialog if there is any error based on the base class instance.
                 when (fragment) {
-                    is ProductsFragment -> {
+                    is MyBooksFragment -> {
                         fragment.hideProgressDialog()
                     }
                 }
-                Log.e("Get Product List", "Error while getting product list.", e)
+                Log.e("Get Book List", "Error while getting book list.", e)
             }
     }
 
-    fun getDashboardItemsList(fragment: DashboardFragment) {
+    fun getDashboardItemsList(fragment: AllBooksFragment) {
         // The collection name for PRODUCTS
-        mFireStore.collection(Constants.PRODUCTS).get() // Will get the documents snapshots.
+        mFireStore.collection("books").get() // Will get the documents snapshots.
             .addOnSuccessListener { document ->
 
                 // Here we get the list of boards in the form of documents.
                 Log.e(fragment.javaClass.simpleName, document.documents.toString())
 
-                // Here we have created a new instance for Products ArrayList.
-                val productsList: ArrayList<Product> = ArrayList()
+                // Here we have created a new instance for Books ArrayList.
+                val booksList: ArrayList<Book> = ArrayList()
 
-                // A for loop as per the list of documents to convert them into Products ArrayList.
+                // A for loop as per the list of documents to convert them into Books ArrayList.
                 for (i in document.documents) {
 
-                    val product = i.toObject(Product::class.java)!!
-                    product.product_id = i.id
-                    productsList.add(product)
+                    val book = i.toObject(Book::class.java)!!
+                    book.book_id = i.id
+                    booksList.add(book)
                 }
 
                 // Pass the success result to the base fragment.
-                fragment.successDashboardItemsList(productsList)
+                fragment.successDashboardItemsList(booksList)
             }
             .addOnFailureListener { e ->
                 // Hide the progress dialog if there is any error which getting the dashboard items list.
@@ -295,14 +482,14 @@ class FirestoreClass {
             }
     }
 
-    fun deleteProduct(fragment: ProductsFragment, productId: String) {
+    fun deleteBook(fragment: MyBooksFragment, bookId: String) {
 
-        mFireStore.collection(Constants.PRODUCTS).document(productId).delete()
+        mFireStore.collection(Constants.PRODUCTS).document(bookId).delete()
             .addOnSuccessListener {
 
 
                 // Notify the success result to the base class.
-                fragment.productDeleteSuccess()
+                fragment.bookDeleteSuccess()
                 // END
             }
             .addOnFailureListener { e ->
@@ -310,125 +497,114 @@ class FirestoreClass {
                 // Hide the progress dialog if there is an error.
                 fragment.hideProgressDialog()
 
-                Log.e(fragment.requireActivity().javaClass.simpleName, "Error while deleting the product.", e)
+                Log.e(fragment.requireActivity().javaClass.simpleName, "Error while deleting the book.", e)
             }
     }
+    fun removeRequest(activity: SentRequestListActivity, book_id: String) {
 
-    fun getProductDetails(activity: ProductDetailsActivity, productId: String) {
-
-        // The collection name for PRODUCTS
-        mFireStore.collection(Constants.PRODUCTS)
-            .document(productId)
-            .get() // Will get the document snapshots.
-            .addOnSuccessListener { document ->
-
-                // Here we get the product details in the form of document.
-                Log.e(activity.javaClass.simpleName, document.toString())
-
-                // Convert the snapshot to the object of Product data model class.
-                val product = document.toObject(Product::class.java)!!
-
-                activity.productDetailsSuccess(product)
-            }
-            .addOnFailureListener { e ->
-
-                // Hide the progress dialog if there is an error.
-                activity.hideProgressDialog()
-
-                Log.e(activity.javaClass.simpleName, "Error while getting the product details.", e)
-            }
-    }
-
-    fun addCartItems(activity: ProductDetailsActivity, addToCart: Cart) {
-
-        mFireStore.collection(Constants.CART_ITEMS)
-            .document()
-            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
-            .set(addToCart, SetOptions.merge())
+        mFireStore.collection("books")
+            // Document ID against which the data to be updated. Here the document id is the current logged in user id.
+            .document(book_id)
+            // A HashMap of fields which are to be updated.
+            .update("status","")
             .addOnSuccessListener {
 
-                // Here call a function of base activity for transferring the result to it.
-                activity.addToCartSuccess()
-            }
-            .addOnFailureListener { e ->
 
-                activity.hideProgressDialog()
-
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while creating the document for cart item.",
-                    e
-                )
-            }
-    }
-
-    fun checkIfItemExistInCart(activity: ProductDetailsActivity, productId: String) {
-
-        mFireStore.collection(Constants.CART_ITEMS)
-            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
-            .whereEqualTo(Constants.PRODUCT_ID, productId)
-            .get()
-            .addOnSuccessListener { document ->
-
-                Log.e(activity.javaClass.simpleName, document.documents.toString())
-
-
-                if (document.documents.size > 0) {
-                    activity.productExistsInCart()
-                } else {
-                    activity.hideProgressDialog()
-                }
+                // Notify the success result to the base class.
+                activity.removeRequestSuccess()
                 // END
             }
             .addOnFailureListener { e ->
+
                 // Hide the progress dialog if there is an error.
                 activity.hideProgressDialog()
 
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while checking the existing cart list.",
-                    e
-                )
+                Log.e(activity.javaClass.simpleName, "Error while deleting the book.", e)
             }
     }
 
-    fun getCartList(activity: Activity) {
+
+    fun getBookDetails(activity: Activity, bookId: String) {
+
         // The collection name for PRODUCTS
-        mFireStore.collection(Constants.CART_ITEMS)
-            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+        mFireStore.collection("books")
+            .document(bookId)
+            .get() // Will get the document snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the book details in the form of document.
+                Log.e(activity.javaClass.simpleName, document.toString())
+
+                // Convert the snapshot to the object of Book data model class.
+                val book = document.toObject(Book::class.java)!!
+                book.book_id = document.id
+
+                when (activity) {
+                    is BookDetailsActivity -> {
+                        activity.bookDetailsSuccess(book)
+                    }
+
+                    is EditBookActivity -> {
+                        activity.bookDetailsSuccess(book)
+                    }
+                    // END
+                }
+            }
+            .addOnFailureListener { e ->
+                when (activity) {
+                    is BookDetailsActivity -> {
+                        activity.hideProgressDialog()
+                    }
+
+                    is EditBookActivity -> {
+                        //activity.successCartItemsList(list)
+                        activity.hideProgressDialog()
+
+                    }
+                    // END
+                }
+                // Hide the progress dialog if there is an error.
+
+                Log.e(activity.javaClass.simpleName, "Error while getting the book details.", e)
+            }
+    }
+
+
+
+    fun getSentRequestList(activity: Activity) {
+        // The collection name for PRODUCTS
+        mFireStore.collection("books")
+            .whereEqualTo("borrower_id", getCurrentUserID())
+            .whereEqualTo("status", "requested")
             .get() // Will get the documents snapshots.
             .addOnSuccessListener { document ->
                 // Here we get the list of cart items in the form of documents.
-                    Log.e(activity.javaClass.simpleName, document.documents.toString())
+                Log.e(activity.javaClass.simpleName, document.documents.toString())
                 // Here we have created a new instance for Cart Items ArrayList.
-                    val list: ArrayList<Cart> = ArrayList()
+                val list: ArrayList<Book> = ArrayList()
                 // A for loop as per the list of documents to convert them into Cart Items ArrayList.
-                    for (i in document.documents) {
-                        val cartItem = i.toObject(Cart::class.java)!!
-                        cartItem.id = i.id
-                        list.add(cartItem)
-                    }
+                for (i in document.documents) {
+                    val cartItem = i.toObject(Book::class.java)!!
+                    cartItem.book_id = i.id
+                    list.add(cartItem)
+                }
                 when (activity) {
-                    is CartListActivity -> {
-                        activity.successCartItemsList(list)
+                    is SentRequestListActivity -> {
+                        activity.successSentRequestList(list)
                     }
 
-                    is CheckoutActivity -> {
-                        activity.successCartItemsList(list)
-                    }
+
                     // END
                 }
             }
             .addOnFailureListener { e ->
                 // Hide the progress dialog if there is an error based on the activity instance.
                 when (activity) {
-                    is CartListActivity -> {
+                    is SentRequestListActivity -> {
                         activity.hideProgressDialog()
                     }
 
-                    is CheckoutActivity -> {
-                        activity.hideProgressDialog()
-                    }
+
                     // END
                 }
 
@@ -437,318 +613,28 @@ class FirestoreClass {
     }
 
 
-    fun getAllProductsList(activity: Activity) {
-        // The collection name for PRODUCTS
-        mFireStore.collection(Constants.PRODUCTS)
-            .get() // Will get the documents snapshots.
-            .addOnSuccessListener { document ->
-
-                // Here we get the list of boards in the form of documents.
-                    Log.e("Products List", document.documents.toString())
-
-                // Here we have created a new instance for Products ArrayList.
-                    val productsList: ArrayList<Product> = ArrayList()
-
-                // A for loop as per the list of documents to convert them into Products ArrayList.
-                    for (i in document.documents) {
-
-                        val product = i.toObject(Product::class.java)
-                        product!!.product_id = i.id
-
-                        productsList.add(product)
-                    }
-
-                when (activity) {
-                    is CartListActivity -> {
-                        activity.successProductsListFromFireStore(productsList)
-                    }
-
-                    is CheckoutActivity -> {
-                        activity.successProductsListFromFireStore(productsList)
-                    }
-
-                }
-            }
-            .addOnFailureListener { e ->
-                // Hide the progress dialog if there is any error based on the base class instance.
-                when (activity) {
-                    is CartListActivity -> {
-                        activity.hideProgressDialog()
-                    }
-
-                    is CheckoutActivity -> {
-                        activity.hideProgressDialog()
-                    }
-                }
-                Log.e("Get Product List", "Error while getting all product list.", e)
-            }
-    }
-
-    fun removeItemFromCart(context: Context, cart_id: String) {
-
-        // Cart items collection name
-        mFireStore.collection(Constants.CART_ITEMS)
-            .document(cart_id) // cart id
-            .delete()
-            .addOnSuccessListener {
 
 
-                // Notify the success result of the removed cart item from the list to the base class.
-                when (context) {
-                    is CartListActivity -> {
-                        context.itemRemovedSuccess()
-                    }
-                }
-                // END
-            }
-            .addOnFailureListener { e ->
 
-                // Hide the progress dialog if there is any error.
-                when (context) {
-                    is CartListActivity -> {
-                        context.hideProgressDialog()
-                    }
-                }
-                Log.e(
-                    context.javaClass.simpleName,
-                    "Error while removing the item from the cart list.",
-                    e
-                )
-            }
-    }
-
-    fun updateMyCart(context: Context, cart_id: String, itemHashMap: HashMap<String, Any>) {
-
-        // Cart items collection name
-        mFireStore.collection(Constants.CART_ITEMS)
-            .document(cart_id) // cart id
-            .update(itemHashMap) // A HashMap of fields which are to be updated.
-            .addOnSuccessListener {
-
-
-                // Notify the success result of the updated cart items list to the base class.
-                when (context) {
-                    is CartListActivity -> {
-                        context.itemUpdateSuccess()
-                    }
-                }
-                // END
-            }
-            .addOnFailureListener { e ->
-
-                // Hide the progress dialog if there is any error.
-                when (context) {
-                    is CartListActivity -> {
-                        context.hideProgressDialog()
-                    }
-                }
-
-                Log.e(
-                    context.javaClass.simpleName,
-                    "Error while updating the cart item.",
-                    e
-                )
-            }
-    }
-
-    fun addAddress(activity: AddEditAddressActivity, addressInfo: Address) {
-
-        // Collection name address.
-        mFireStore.collection(Constants.ADDRESSES)
-            .document()
-            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
-            .set(addressInfo, SetOptions.merge())
-            .addOnSuccessListener {
-
-                // Here call a function of base activity for transferring the result to it.
-                activity.addUpdateAddressSuccess()
-                // END
-            }
-            .addOnFailureListener { e ->
-                activity.hideProgressDialog()
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while adding the address.",
-                    e
-                )
-            }
-    }
-
-    fun getAddressesList(activity: AddressListActivity) {
-        // The collection name for PRODUCTS
-        mFireStore.collection(Constants.ADDRESSES)
+    fun getMyRequestsList(fragment: RequestsFragment) {
+        mFireStore.collection("books")
             .whereEqualTo(Constants.USER_ID, getCurrentUserID())
-            .get() // Will get the documents snapshots.
-            .addOnSuccessListener { document ->
-                // Here we get the list of boards in the form of documents.
-                Log.e(activity.javaClass.simpleName, document.documents.toString())
-                // Here we have created a new instance for address ArrayList.
-                val addressList: ArrayList<Address> = ArrayList()
-
-                // A for loop as per the list of documents to convert them into Boards ArrayList.
-                for (i in document.documents) {
-
-                    val address = i.toObject(Address::class.java)!!
-                    address.id = i.id
-
-                    addressList.add(address)
-                }
-
-                activity.successAddressListFromFirestore(addressList)
-                // END
-            }
-            .addOnFailureListener { e ->
-                // Here call a function of base activity for transferring the result to it.
-
-                activity.hideProgressDialog()
-
-                Log.e(activity.javaClass.simpleName, "Error while getting the address list.", e)
-            }
-
-    }
-
-    fun updateAddress(activity: AddEditAddressActivity, addressInfo: Address, addressId: String) {
-
-        mFireStore.collection(Constants.ADDRESSES)
-            .document(addressId)
-            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
-            .set(addressInfo, SetOptions.merge())
-            .addOnSuccessListener {
-
-                // Here call a function of base activity for transferring the result to it.
-                activity.addUpdateAddressSuccess()
-            }
-            .addOnFailureListener { e ->
-                activity.hideProgressDialog()
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while updating the Address.",
-                    e
-                )
-            }
-    }
-
-    fun deleteAddress(activity: AddressListActivity, addressId: String) {
-
-        mFireStore.collection(Constants.ADDRESSES)
-            .document(addressId)
-            .delete()
-            .addOnSuccessListener {
-
-
-                activity.deleteAddressSuccess()
-                // END
-            }
-            .addOnFailureListener { e ->
-                activity.hideProgressDialog()
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while deleting the address.",
-                    e
-                )
-            }
-    }
-
-    fun placeOrder(activity: CheckoutActivity, order: Order) {
-
-        mFireStore.collection(Constants.ORDERS)
-            .document()
-            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
-            .set(order, SetOptions.merge())
-            .addOnSuccessListener {
-
-                // Here call a function of base activity for transferring the result to it.
-                activity.orderPlacedSuccess()
-                // END
-            }
-            .addOnFailureListener { e ->
-
-                // Hide the progress dialog if there is any error.
-                activity.hideProgressDialog()
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while placing an order.",
-                    e
-                )
-            }
-    }
-
-    fun updateAllDetails(activity: CheckoutActivity, cartList: ArrayList<Cart>, order: Order) {
-
-        val writeBatch = mFireStore.batch()
-        for (cart in cartList) {
-
-            val soldProduct = SoldProduct(
-                cart.product_owner_id,
-                cart.title,
-                cart.price,
-                cart.cart_quantity,
-                cart.image,
-                order.title,
-                order.order_datetime,
-                order.sub_total_amount,
-                order.shipping_charge,
-                order.total_amount,
-                order.address
-            )
-
-
-            val documentReference = mFireStore.collection(Constants.SOLD_PRODUCTS).document()
-            writeBatch.set(documentReference, soldProduct)
-            // END
-        }
-        // Here we will update the product stock in the products collection based to cart quantity.
-        for (cart in cartList) {
-
-            val productHashMap = HashMap<String, Any>()
-
-            productHashMap[Constants.STOCK_QUANTITY] =
-                (cart.stock_quantity.toInt() - cart.cart_quantity.toInt()).toString()
-
-            val documentReference = mFireStore.collection(Constants.PRODUCTS)
-                .document(cart.product_id)
-
-            writeBatch.update(documentReference, productHashMap)
-        }
-
-        // Delete the list of cart items
-        for (cart in cartList) {
-
-            val documentReference = mFireStore.collection(Constants.CART_ITEMS).document(cart.id)
-            writeBatch.delete(documentReference)
-        }
-
-        writeBatch.commit().addOnSuccessListener {
-
-            activity.allDetailsUpdatedSuccessfully()
-            // END
-
-        }.addOnFailureListener { e ->
-            // Here call a function of base activity for transferring the result to it.
-            activity.hideProgressDialog()
-
-            Log.e(activity.javaClass.simpleName, "Error while updating all the details after order placed.", e)
-        }
-    }
-
-    fun getMyOrdersList(fragment: OrdersFragment) {
-        mFireStore.collection(Constants.ORDERS)
-            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .whereIn("status", listOf("requested", "borrowed","returning"))
             .get() // Will get the documents snapshots.
             .addOnSuccessListener { document ->
                 Log.e(fragment.javaClass.simpleName, document.documents.toString())
-                val list: ArrayList<Order> = ArrayList()
+                val list: ArrayList<Book> = ArrayList()
 
                 for (i in document.documents) {
 
-                    val orderItem = i.toObject(Order::class.java)!!
-                    orderItem.id = i.id
+                    val orderItem = i.toObject(Book::class.java)!!
+                    orderItem.book_id = i.id
 
                     list.add(orderItem)
                 }
 
 
-                fragment.populateOrdersListInUI(list)
+                fragment.populateRequestsListInUI(list)
                 // END
             }
             .addOnFailureListener { e ->
@@ -760,28 +646,31 @@ class FirestoreClass {
             }
     }
 
-    fun getSoldProductsList(fragment: SoldProductsFragment) {
+
+
+    fun getBorrowedList(fragment: BorrowedBooksFragment) {
         // The collection name for SOLD PRODUCTS
-        mFireStore.collection(Constants.SOLD_PRODUCTS)
-            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+        mFireStore.collection("books")
+            .whereEqualTo("borrower_id", getCurrentUserID())
+            .whereEqualTo("status", "borrowed")
             .get() // Will get the documents snapshots.
             .addOnSuccessListener { document ->
-                // Here we get the list of sold products in the form of documents.
+                // Here we get the list of sold books in the form of documents.
                 Log.e(fragment.javaClass.simpleName, document.documents.toString())
 
-                // Here we have created a new instance for Sold Products ArrayList.
-                val list: ArrayList<SoldProduct> = ArrayList()
+                // Here we have created a new instance for Sold Books ArrayList.
+                val list: ArrayList<Book> = ArrayList()
 
-                // A for loop as per the list of documents to convert them into Sold Products ArrayList.
+                // A for loop as per the list of documents to convert them into Sold Books ArrayList.
                 for (i in document.documents) {
 
-                    val soldProduct = i.toObject(SoldProduct::class.java)!!
-                    soldProduct.id = i.id
+                    val soldBook = i.toObject(Book::class.java)!!
+                    soldBook.book_id = i.id
 
-                    list.add(soldProduct)
+                    list.add(soldBook)
                 }
 
-                fragment.successSoldProductsList(list)
+                fragment.successGetBorrowedList(list)
                 // END
             }
             .addOnFailureListener { e ->
@@ -790,7 +679,7 @@ class FirestoreClass {
 
                 Log.e(
                     fragment.javaClass.simpleName,
-                    "Error while getting the list of sold products.",
+                    "Error while getting the list of sold books.",
                     e
                 )
             }
