@@ -57,7 +57,20 @@ class BookDetailsActivity : BaseActivity(), View.OnClickListener  {
 
 
     }
+    private fun getUserDetails() {
 
+        // Show the progress dialog
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        // Call the function of Firestore class to get the user details from firestore which is already created.
+        FirestoreClass().getUserDetails(this@BookDetailsActivity)
+    }
+    fun userDetailsSuccess(user: User) {
+        mUserDetails = user
+
+        getBookDetails()
+
+    }
 
     private fun requestBook() {
 
@@ -77,24 +90,21 @@ class BookDetailsActivity : BaseActivity(), View.OnClickListener  {
         FirestoreClass().requestBook(this@BookDetailsActivity,bookHashMap,mBookId)
     }
 
-    private fun getUserDetails() {
 
-        // Show the progress dialog
-        showProgressDialog(resources.getString(R.string.please_wait))
 
-        // Call the function of Firestore class to get the user details from firestore which is already created.
-        FirestoreClass().getUserDetails(this@BookDetailsActivity)
+
+    private fun setupActionBar() {
+
+        setSupportActionBar(toolbar_book_details_activity)
+
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
+        }
+
+        toolbar_book_details_activity.setNavigationOnClickListener { onBackPressed() }
     }
-    fun userDetailsSuccess(user: User) {
-        mUserDetails = user
-
-        getBookDetails()
-
-    }
-
-
-
-
 
     fun bookDetailsSuccess(book: Book) {
 
@@ -142,20 +152,6 @@ class BookDetailsActivity : BaseActivity(), View.OnClickListener  {
         hideProgressDialog()
 
     }
-
-    private fun setupActionBar() {
-
-        setSupportActionBar(toolbar_book_details_activity)
-
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
-        }
-
-        toolbar_book_details_activity.setNavigationOnClickListener { onBackPressed() }
-    }
-
 
 
     fun requestBookSuccess() {

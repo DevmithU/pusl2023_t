@@ -53,7 +53,9 @@ open class BaseActivity : AppCompatActivity() {
         mProgressDialog.show()
     }
 
-    
+    fun hideProgressDialog() {
+        mProgressDialog.dismiss()
+    }
 
     fun doubleBackToExit() {
 
@@ -72,10 +74,6 @@ open class BaseActivity : AppCompatActivity() {
 
         @Suppress("DEPRECATION")
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 1000)
-    }
-
-   fun hideProgressDialog() {
-        mProgressDialog.dismiss()
     }
 
 }

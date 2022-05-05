@@ -51,6 +51,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <ImageView
+                    android:id="@+id/iv_book_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorImageViewBackground"
+                    android:contentDescription="@string/content_description"
+                    android:scaleType="fitCenter"
+                    />
 
                 <ImageView
                     android:id="@+id/iv_add_update_book"
@@ -61,16 +69,6 @@
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:padding="@dimen/add_update_book_icon_padding"
                     android:src="@drawable/ic_vector_add_photo" />
-
-                
-                <ImageView
-                    android:id="@+id/iv_book_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorImageViewBackground"
-                    android:contentDescription="@string/content_description"
-                    android:scaleType="fitCenter"
-                    />
             </FrameLayout>
 
             <com.google.android.material.textfield.TextInputLayout
