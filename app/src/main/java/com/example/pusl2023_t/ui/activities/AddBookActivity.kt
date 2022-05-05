@@ -142,13 +142,7 @@ class AddBookActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    fun imageUploadSuccess(imageURL: String) {
 
-        // Initialize the global image url variable.
-        mBookImageURL = imageURL
-
-        uploadBookDetails()
-    }
 
     private fun uploadBookImage() {
 
@@ -159,6 +153,13 @@ class AddBookActivity : BaseActivity(), View.OnClickListener {
             mSelectedImageFileUri,
             Constants.PRODUCT_IMAGE
         )
+    }
+    fun imageUploadSuccess(imageURL: String) {
+
+        // Initialize the global image url variable.
+        mBookImageURL = imageURL
+
+        uploadBookDetails()
     }
 
     //___________________________4

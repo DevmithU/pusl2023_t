@@ -71,29 +71,7 @@
                     android:src="@drawable/ic_vector_add_photo" />
             </FrameLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_book_title"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/et_hint_book_title"
-                android:textColorHint="@color/colorSecondaryText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fl_book_image">
-
-                <com.example.pusl2023_t.utils.BKSEditText
-                    android:id="@+id/et_book_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:padding="@dimen/et_padding"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/et_textSize" />
-            </com.google.android.material.textfield.TextInputLayout>
+            
 
 
 
@@ -118,6 +96,30 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:minLines="4"
+                    android:padding="@dimen/et_padding"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/et_textSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_book_title"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/et_hint_book_title"
+                android:textColorHint="@color/colorSecondaryText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fl_book_image">
+
+                <com.example.pusl2023_t.utils.BKSEditText
+                    android:id="@+id/et_book_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
                     android:padding="@dimen/et_padding"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/et_textSize" />

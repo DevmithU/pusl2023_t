@@ -35,11 +35,14 @@ open class MyBooksListAdapter(
             holder.itemView.ib_delete_book.setOnClickListener {
 
 
+
                 fragment.deleteBook(model.book_id)
             }
 
             holder.itemView.setOnClickListener {
+
                 // Launch Book details screen.
+
                 val intent = Intent(context, EditBookActivity::class.java)
                 intent.putExtra(Constants.EXTRA_PRODUCT_ID, model.book_id)
                 intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, model.user_id)
@@ -55,6 +58,7 @@ open class MyBooksListAdapter(
     override fun getItemCount(): Int {
         return list.size
     }
+
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
 

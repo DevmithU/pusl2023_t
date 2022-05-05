@@ -57,7 +57,9 @@ open class BorrowedListAdapter(
     }
 
     override fun getItemCount(): Int {
+
         return list.size
+
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
